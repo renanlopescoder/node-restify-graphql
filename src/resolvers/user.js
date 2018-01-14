@@ -6,6 +6,11 @@ export default {
         user._id = user._id.toString();
         return user;
       });
+    },
+    findUser: async (parent, args, { User }) => {
+      let user = await User.findOne({ '_id': args });
+      user._id = user._id.toString();
+      return user;
     }
   },
   Mutation: {

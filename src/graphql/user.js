@@ -6,7 +6,8 @@ export default `
   }
 
   type Query {
-    allUsers: [User!]!
+    allUsers: [User!]!,
+    findUser(_id: String!): User!
   }
 
   type Mutation {
