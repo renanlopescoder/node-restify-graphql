@@ -4,7 +4,7 @@ require('./src/config/database');
 import { makeExecutableSchema } from 'graphql-tools';
 import typeDefs from './src/graphql/typeDefs';
 import resolvers from './src/graphql/resolvers';
-import { UserModel, ProductModel } from './src/graphql/models';
+import context from './src/graphql/context';
 
 
 const schema = makeExecutableSchema({
@@ -18,7 +18,7 @@ const server = restify.createServer({
   title: 'Apollo Server',
 });
 
-const graphQLOptions = { schema, context: { User: UserModel, Product: ProductModel } };
+const graphQLOptions = { schema, context };
 
 server.use(restify.plugins.bodyParser());
 server.use(restify.plugins.queryParser());
