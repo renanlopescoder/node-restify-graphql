@@ -1,6 +1,6 @@
-let mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-let schema = mongoose.Schema({
+const schema = mongoose.Schema({
 			name: {
 				type: String,
 				required: false,
@@ -11,4 +11,4 @@ let schema = mongoose.Schema({
 			},
 	}, {timestamps: true});
 
-export default mongoose.model('User', schema);;
+export default mongoose.model('User', schema);

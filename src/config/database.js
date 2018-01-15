@@ -16,7 +16,7 @@
  */
 	let mongoose = require('mongoose');
 
-	mongoose.connect('mongodb://yourHerokuDatabase', { config: {autoIndex: false} });
+	mongoose.connect('mongodb://bifrost:bifrostsoftware1324@ds245287.mlab.com:45287/heroku_k34fbvx8', { useMongoClient: true, config: {autoIndex: false} });
 	mongoose.Promise = global.Promise;
 
 
