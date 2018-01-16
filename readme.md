@@ -12,3 +12,5 @@
 - Run `npm start`
 
 ### Access
+
+- GraphQL Playground http://localhost:3000/graphiql
