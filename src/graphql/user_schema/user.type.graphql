@@ -1,8 +1,10 @@
 export default `
   type User {
     _id: String!,
-    name: String!,
-    email: String!
+    username: String,
+    email: String!,
+    nickname: String,
+    photo: String,
   }
 
   type Query {
@@ -11,6 +13,12 @@ export default `
   }
 
   type Mutation {
-    createUser(name: String!, email: String!): User!
+    createUser(
+      username: String,
+      email: String!,
+      password: String!,
+      nickname: String,
+      photo: String
+    ): User!
   }
 `;
