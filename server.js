@@ -32,6 +32,8 @@ server.get('/graphql', graphqlRestify(graphQLOptions));
 server.post('/graphql',
 graphqlRestify(async (req, res) => await Authentication.verifyToken(req, res, graphQLOptions)));
 
-server.get('/graphiql', graphiqlRestify({ endpointURL: '/graphql' }));
+server.post('/graphqlTest', graphqlRestify(graphQLOptions))
+
+server.get('/graphiql', graphiqlRestify({ endpointURL: '/graphqlTest' }));
 
 server.listen(PORT, () => console.log(`Listening on ${PORT}`));
