@@ -1,8 +1,8 @@
 export default `
   type Product {
-    _id: String!,
-    name: String!,
-    description: String!
+    _id: String,
+    name: String,
+    description: String,
   }
 
   type Query {
