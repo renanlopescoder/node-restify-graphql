@@ -24,9 +24,8 @@ const graphQLOptions = { schema, context };
 server.use(restify.plugins.bodyParser());
 server.use(restify.plugins.queryParser());
 
-// server.post('/login', Authentication.login);
-
-// server.post('/registration', Registration.register);
+server.post('/login', Authentication.login);
+server.post('/registration', Registration.register);
 
 server.get('/graphql', graphqlRestify(graphQLOptions));
 
