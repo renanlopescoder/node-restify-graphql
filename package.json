@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "preinstall": "npm i -g pm2 && pm2 install pm2-logrotate",
+    "preinstall": "npm i -g pm2 && pm2 install pm2-logrotate && npm i -g babel-node",
     "dev": "pm2 start --interpreter babel-node --attach server.js --watch",
     "start": "node ./node_modules/.bin/pm2 start --interpreter babel-node --attach server.js"
   },
