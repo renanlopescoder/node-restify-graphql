@@ -1,0 +1,16 @@
+export default `
+  type Post {
+    _id: String,
+    name: String,
+    description: String,
+  }
+
+  type Query {
+    allPosts: [Post!]!,
+    findPost(_id: String!): Post!
+  }
+
+  type Mutation {
+    createPost(name: String!, description: String!): Post!
+  }
+`;

@@ -17,7 +17,8 @@
 	let mongoose = require('mongoose');
 
 	// mongoose.connect('mongodb://herokumlab:herokupass@ds245287.mlab.com:45287/heroku_k34fbvx8', { useMongoClient: true, config: {autoIndex: false} });
-	mongoose.connect('mongodb://localhost/yourDataBase', { useMongoClient: true });
+	// mongoose.connect('mongodb://localhost/yourDataBase', { useMongoClient: true });
+	mongoose.connect('mongodb://live:live@ds145312.mlab.com:45312/heroku_jwprwsr5', { useMongoClient: true });
 	mongoose.Promise = global.Promise;
 
 

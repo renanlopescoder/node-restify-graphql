@@ -2,11 +2,11 @@ import { mergeTypes } from 'merge-graphql-schemas';
 
 // Type Imports
 import userType from './user_schema/user.type.graphql';
-import productType from './product_schema/product.type.graphql';
+import postType from './post_schema/post.type.graphql';
 
 const types = [
   userType,
-  productType,
+  postType,
 ];
 
 export default mergeTypes(types);
