@@ -27,7 +27,11 @@ server.post('/registration', Registration.register)
 
 server.get('/graphql', graphqlRestify(graphQLOptions))
 
-server.post('/graphql', graphqlRestify(async (req, res) => await Authentication.verifyToken(req, res, graphQLOptions)))
+server.post('/graphql', graphqlRestify(
+  async (req, res) => {
+    return await Authentication.verifyToken(req, res, graphQLOptions)
+  }
+))
 
 server.post('/graphqlTest', graphqlRestify(graphQLOptions))
 

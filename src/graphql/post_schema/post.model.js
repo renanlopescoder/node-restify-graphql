@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 
 const schema = mongoose.Schema({
 			name: {
@@ -9,6 +9,6 @@ const schema = mongoose.Schema({
 				type: String,
 				required: false,
 			},
-	}, {timestamps: true});
+	}, {timestamps: true})
 
-export default mongoose.model('Post', schema);
+export default mongoose.model('Post', schema)

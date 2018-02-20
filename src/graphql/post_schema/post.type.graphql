@@ -13,4 +13,4 @@ export default `
   type Mutation {
     createPost(name: String!, description: String!): Post!
   }
-`;
+`
