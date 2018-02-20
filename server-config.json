@@ -1,12 +1,9 @@
 {
-  "apps" : [
-    {
-      "name": "production",
-      "script": "./server.js",
-      "exec_interpreter": "babel-node",
-      "instances": "max",
-      "exec_mode": "cluster",
-      "post-deploy": "npm install && pm2 restart production"
-    }
-  ]
+  "apps" : [{
+    "name": "production",
+    "script": "./server.js",
+    "exec_interpreter": "babel-node",
+    "instances": "max",
+    "exec_mode": "fork"
+  }]
 }
