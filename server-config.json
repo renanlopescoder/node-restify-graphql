@@ -5,7 +5,8 @@
       "script"      : "./server.js",
       "watch"       : false,
       "exec_interpreter": "./node_modules/.bin/babel-node",
-      "exec_mode"        : "fork"
+      "instances" : "max",
+      "exec_mode" : "cluster"
     }
   ]
 }

@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "preinstall": "npm i -g pm2 && pm2 install pm2-logrotate",
-    "dev": "pm2 start --interpreter babel-node --attach server.js --watch",
-    "start": "pm2 start server-config.json"
+    "dev": "pm2 start server.js --interpreter ./node_modules/.bin/babel-node --watch --attach",
+    "start": "node ./node_modules/.bin/pm2 start server-config.json"
   },
   "author": "Renan Lopes",
   "license": "ISC",
