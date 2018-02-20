@@ -1,1 +1,1 @@
-web: pm2 start server-config.json
+web: npm start
