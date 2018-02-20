@@ -2,11 +2,10 @@
   "apps" : [
     {
       "name": "production",
-      "script": "server.js",
+      "script": "./server.js",
       "exec_interpreter": "babel-node",
       "instances": "max",
-      "exec_mode": "cluster_mode",
-      "cwd": "./server.js"
+      "exec_mode": "cluster"
     }
   ]
 }
