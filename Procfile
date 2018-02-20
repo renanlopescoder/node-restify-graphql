@@ -1,1 +1,1 @@
-web: node ./node_modules/.bin/pm2 start server-config.json
+web: pm2 start server-config.json

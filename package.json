@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "preinstall": "npm i -g pm2 && pm2 install pm2-logrotate && npm install -g babel-cli",
-    "dev": "pm2 start server.js  --interpreter babel-node --attach --watch",
-    "start": "pm2 start server-config.json"
+    "dev": "pm2 start server.js  --interpreter babel-node --attach --watch"
   },
   "author": "Renan Lopes",
   "license": "ISC",
