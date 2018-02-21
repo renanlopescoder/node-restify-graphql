@@ -13,7 +13,7 @@ const schema = makeExecutableSchema({
   resolvers,
 })
 
-const PORT = 4000
+const PORT = process.env.PORT || process.cwd() || 3000
 
 const server = restify.createServer({ title: 'restify' })
 
