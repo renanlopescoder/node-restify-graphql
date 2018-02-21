@@ -4,6 +4,6 @@
     "script": "./server.js",
     "exec_interpreter": "babel-node",
     "instances": "max",
-    "exec_mode": "fork"
+    "exec_mode": "cluster"
   }]
 }
