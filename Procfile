@@ -1,1 +1,1 @@
-web: pm2 start server-config.json
+web: babel-node server.js

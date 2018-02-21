@@ -7,34 +7,47 @@ import resolvers from './src/graphql/resolvers'
 import context from './src/graphql/context'
 import Authentication from './src/controllers/auth'
 import Registration from './src/controllers/registration'
+import cluster from 'cluster'
 
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
 })
 
-const PORT = process.env.PORT || process.cwd() || 3000
-
-const server = restify.createServer({ title: 'restify' })
-
+const PORT = (process.env.PORT || 8888)
 const graphQLOptions = { schema, context }
 
-server.use(restify.plugins.bodyParser())
-server.use(restify.plugins.queryParser())
+if (cluster.isMaster) {
+  console.log('Master server is active. Forking workers now.')
 
-server.post('/login', Authentication.login)
-server.post('/registration', Registration.register)
-
-server.get('/graphql', graphqlRestify(graphQLOptions))
-
-server.post('/graphql', graphqlRestify(
-  async (req, res) => {
-    return await Authentication.verifyToken(req, res, graphQLOptions)
+  let cpuCount = require('os').cpus().length
+  for (let i=0; i < cpuCount; i++){
+    cluster.fork();
   }
-))
+  cluster.on('exit', (worker) => {
+    console.error(`Worker ${worker.id} has died! Creating a new one.`)
+    cluster.fork()
+  })
+} else {
+  let server  = restify.createServer({'Node Server': 'v1.0.0'})
 
-server.post('/graphqlTest', graphqlRestify(graphQLOptions))
+  server.use(restify.plugins.bodyParser())
+  server.use(restify.plugins.queryParser())
 
-server.get('/graphiql', graphiqlRestify({ endpointURL: '/graphqlTest' }))
+  server.post('/login', Authentication.login)
+  server.post('/registration', Registration.register)
 
-server.listen(PORT, () => console.log(`Listening on ${PORT}`))
+  server.get('/graphql', graphqlRestify(graphQLOptions))
+
+  server.post('/graphql', graphqlRestify(
+    async (req, res) => {
+      return await Authentication.verifyToken(req, res, graphQLOptions)
+    }
+  ))
+  server.post('/graphqlTest', graphqlRestify(graphQLOptions))
+  server.get('/graphiql', graphiqlRestify({ endpointURL: '/graphqlTest' }))
+
+  server.listen(PORT, () => {
+    console.log(`Worker ${cluster.worker.id} spawned for port ${PORT}.`)
+  })
+}
