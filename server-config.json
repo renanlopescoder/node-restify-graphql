@@ -2,8 +2,6 @@
   "apps" : [{
     "name": "production",
     "script": "./server.js",
-    "exec_interpreter": "babel-node",
-    "instances": "4",
-    "exec_mode": "cluster"
+    "exec_interpreter": "babel-node"
   }]
 }

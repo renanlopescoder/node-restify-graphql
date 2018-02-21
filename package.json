@@ -6,7 +6,7 @@
   "scripts": {
     "preinstall": "npm i -g pm2@latest babel-cli && pm2 update",
     "dev": "pm2 start server.js  --interpreter babel-node --attach --watch",
-    "start": "pm2 start server-config.json"
+    "start": "pm2 start server.js -i 4 --interpreter babel-node"
   },
   "author": "Renan Lopes",
   "license": "ISC",
