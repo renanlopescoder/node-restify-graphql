@@ -3,7 +3,7 @@
     "name": "production",
     "script": "./server.js",
     "exec_interpreter": "babel-node",
-    "instances": "max",
+    "instances": "4",
     "exec_mode": "cluster"
   }]
 }
