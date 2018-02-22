@@ -3,6 +3,7 @@ export default `
     _id: String,
     name: String,
     description: String,
+    imageUrl: String,
   }
 
   type Query {
@@ -11,6 +12,6 @@ export default `
   }
 
   type Mutation {
-    createPost(name: String!, description: String!): Post!
+    createPost(name: String!, description: String!, imageUrl: String!): Post!
   }
 `
