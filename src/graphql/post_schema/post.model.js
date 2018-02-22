@@ -11,4 +11,4 @@ const schema = mongoose.Schema({
 			},
 	}, {timestamps: true})
 
-export default mongoose.model('Post', schema)
+exports.Post =  mongoose.model('Post', schema)

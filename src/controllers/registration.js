@@ -2,7 +2,7 @@ const mongoose =  require('mongoose');
 const bcrypt = require('bcrypt');
 const saltRounds = 15;
 const jwt = require('jsonwebtoken');
-const model = mongoose.model('User');
+const model = require('../graphql/user_schema/user.model').User
 
   let registrationController = {};
   const SECRET = 'secret';

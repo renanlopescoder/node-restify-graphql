@@ -1,21 +1,29 @@
-const mongoose =  require('mongoose');
-const bcrypt = require('bcrypt');
-const saltRounds = 15;
-const jwt = require('jsonwebtoken');
-const model = mongoose.model('User');
+import mongoose from 'mongoose'
+import { makeExecutableSchema } from 'graphql-tools'
+import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
 
-  let authController = {};
-  const SECRET = 'secret';
+import typeDefs from '../graphql/typeDefs'
+import resolvers from '../graphql/resolvers'
+import context from '../graphql/context'
+import model from '../graphql/user_schema/user.model'
+
+const userModel = model.User
+const fakeContext= mongoose.model('Fake', mongoose.Schema({}))
+
+const saltRounds = 15
+  let authController = {}
+  const SECRET = 'secret'
 
   authController.login = (req, res) => {
-    model.findOne({ email: req.body.email })
+    userModel.findOne({ email: req.body.email })
     .then(
       (user) => {
         bcrypt.compare(req.body.password, user.password, (error, success) => {
           if (error) {
-            res.send(401, { error: error, message: 'Password mismatch'});
+            res.send(401, { error: error, message: 'Password mismatch'})
           } else if (success) {
-            const token = jwt.sign({ user_id: user._id }, SECRET, { expiresIn: '3h' });
+            const token = jwt.sign({ user_id: user._id }, SECRET, { expiresIn: '3h' })
             return res.send(
               200,
               {
@@ -26,29 +34,43 @@ const model = mongoose.model('User');
                 email : user.email,
                 token: token,
               }
-            );
-          };
-        });
+            )
+          }
+        })
       }
     )
     .catch(error => res.send(401, { error: error, message: 'Error, user does not exists' }))
-  };
+  }
 
-  authController.verifyToken = (req, res, graphQLOptions) => {
-    let serverResponse = {};
-    const TOKEN = req.header('Authorization');
-    if (TOKEN) {
-      jwt.verify(TOKEN, SECRET, (error, decoded) => {
-        if (error) {
-          res.send(401, {error: 'Invalid Token'});
-        } else {
-          serverResponse = graphQLOptions;
+  const generateSecureSchema = () => {
+    const schema = makeExecutableSchema({
+      typeDefs,
+      resolvers,
+    })
+
+    let generated = {schema, context}
+
+    return generated
+  }
+
+  authController.verifyToken = (req, res) => {
+    const TOKEN = req.header('Authorization')
+    let secureSchema
+
+    if (TOKEN)
+      jwt.verify(TOKEN, SECRET,
+        (error, decoded) => {
+          if (error)
+          res.send(401, {message: 'Error: invalid token'})
+          else
+            secureSchema = generateSecureSchema()
         }
-      });
-    } else {
-      res.send(401, {error: 'Token is Required'});
-    };
-    return serverResponse;
-  };
+      )
 
-export default authController;
+      else
+        res.send(401, {message: 'Error: token is required'})
+
+    return secureSchema
+  }
+
+export default authController
