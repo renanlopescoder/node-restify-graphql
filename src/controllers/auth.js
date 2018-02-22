@@ -13,7 +13,7 @@ const authController = {};
 const SECRET = 'secret';
 
 authController.login = (req, res) => {
-  userModel.find({ email: req.body.email })
+  userModel.findOne({ email: req.body.email })
     .then((user) => {
       bcrypt.compare(req.body.password, user.password, (error, success) => {
         if (error) {
