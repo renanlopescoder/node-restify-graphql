@@ -1,4 +1,5 @@
 import restify from 'restify'
+require('newrelic');
 import cluster from 'cluster'
 import { graphqlRestify, graphiqlRestify } from 'apollo-server-restify'
 require('./src/config/database')
