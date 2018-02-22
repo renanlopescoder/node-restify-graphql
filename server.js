@@ -12,7 +12,7 @@ const CPU_BY_WORKER = 2
 const WORKERS = (CPUS / CPU_BY_WORKER)
 
 if (cluster.isMaster) {
-  console.log(`Master server is active: Forking ${WORKERS} workers with ${CPU_BY_WORKER} cpu by worker.`)
+  console.info(`Master server is active: Forking ${WORKERS} workers with ${CPU_BY_WORKER} cpu by worker.`)
 
   for (let i = 0; i < WORKERS; i++){
     cluster.fork()
@@ -33,6 +33,6 @@ if (cluster.isMaster) {
   server.post('/graphql', graphqlRestify((req, res) => Authentication.verifyToken(req, res)))
 
   server.listen(PORT, () => {
-    console.log(`Worker ${cluster.worker.id} spawned for port ${PORT}.`)
+    console.info(`Worker ${cluster.worker.id} spawned for port ${PORT}.`)
   })
 }
