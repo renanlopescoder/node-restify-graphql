@@ -1,3 +1,5 @@
+require('newrelic');
+
 import restify from 'restify';
 import cluster from 'cluster';
 import { graphqlRestify } from 'apollo-server-restify';
@@ -5,7 +7,6 @@ import Authentication from './src/controllers/auth';
 import Registration from './src/controllers/registration';
 
 require('./src/config/database');
-require('newrelic');
 const CPUS = require('os').cpus().length;
 
 const PORT = (process.env.PORT || 8888);
