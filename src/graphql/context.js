@@ -1,9 +1,9 @@
-import UserModel from './user_schema/user.model';
-import PostModel from './post_schema/post.model';
+import User from '../models/User';
+import Post from '../models/Post';
 
 const context = {
-  User: UserModel.User,
-  Post: PostModel.Post,
+  User: User,
+  Post: Post,
 };
 
 export default context;
