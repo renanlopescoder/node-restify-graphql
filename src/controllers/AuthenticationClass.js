@@ -11,8 +11,31 @@ const User = mongoose.model('User')
 const secret = 'secret'
 
 export default class Authentication {
+  login(req, res) {
+    User.findOne({ email: req.body.email })
+      .then(user => Authentication.checkEncryption(req.body.password, user, res))
+      .catch(error => res.send(401, { message: 'Error: user does not exists' }))
+  }
+
+  verifyToken(req, res) {
+    const token = req.header('Authorization')
+    let access
+    if (token)
+      jwt.verify(token, secret, (error, decoded) => {
+        if (error) {
+          res.send(401, { message: 'Error: invalid token' })
+        } else if (decoded) {
+          access = Authentication.generateGraphqlOptions()
+        }
+      })
+    else
+      res.send(401, { message: 'Error: token is required' })
+
+    return access
+  }
+
   static generateGraphqlOptions() {
-    const schema = makeExecutableSchema({typeDefs, resolvers});
+    const schema = makeExecutableSchema({typeDefs, resolvers})
     return ({ schema, context })
   }
 
@@ -30,35 +53,8 @@ export default class Authentication {
             token: token,
           }
         )
-      } else {
+      } else
         res.send(401, { message: 'Error: Password mismatch' })
-      }
     })
-  }
-
-  login(req, res) {
-    User.findOne({ email: req.body.email })
-      .then((user) => {
-        Authentication.checkEncryption(req.body.password, user, res)
-      })
-      .catch(error => res.send(401, { message: 'Error: user does not exists' }))
-  }
-
-  verifyToken(req, res) {
-    const token = req.header('Authorization')
-    let access
-
-    if (token) {
-      jwt.verify(token, secret, (error, decoded) => {
-        if (error) {
-          res.send(401, { message: 'Error: invalid token' })
-        } else if (decoded) {
-          access = Authentication.generateGraphqlOptions()
-        }
-      })
-    } else {
-      res.send(401, { message: 'Error: token is required' })
-    }
-    return access
   }
 }

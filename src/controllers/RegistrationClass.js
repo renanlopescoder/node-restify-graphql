@@ -12,9 +12,8 @@ export default class Registration {
         User.create(req.body)
           .then(user => res.send(200, user))
           .catch(error => res.send(500, { message: 'Error: database transaction' }))
-      } else {
+      } else
         res.send(500, { message: 'Error: password encrypt process' })
-      }
     })
   }
 }
