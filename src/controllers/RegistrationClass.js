@@ -5,7 +5,7 @@ const User = mongoose.model("User")
 const rounds = 2
 
 export default class Registration {
-  register(req, res) {
+  signup(req, res) {
     bcrypt.hash(req.body.password, rounds).then((hash) => {
       if (hash) {
         req.body.password = hash

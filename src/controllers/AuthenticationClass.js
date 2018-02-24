@@ -11,7 +11,7 @@ const User = mongoose.model('User')
 const secret = 'secret'
 
 export default class Authentication {
-  login(req, res) {
+  signin(req, res) {
     User.findOne({ email: req.body.email })
       .then(user => Authentication.checkEncryption(req.body.password, user, res))
       .catch(error => res.send(401, { message: 'Error: user does not exists' }))
