@@ -7,12 +7,15 @@ import typeDefs from '../graphql/typeDefs'
 import resolvers from '../graphql/resolvers'
 import context from '../graphql/context'
 
-const User = mongoose.model('User')
-const secret = 'secret'
+const schema = makeExecutableSchema({typeDefs, resolvers})
+
+const OPTIONS = ({ schema, context })
+const SECRET = 'secret'
+const MODEL = mongoose.model('User')
 
 export default class Authentication {
   signin(req, res) {
-    User.findOne({ email: req.body.email })
+    MODEL.findOne({ email: req.body.email })
       .then(user => Authentication.checkEncryption(req.body.password, user, res))
       .catch(error => res.send(401, { message: 'Error: user does not exists' }))
   }
@@ -21,11 +24,11 @@ export default class Authentication {
     const token = req.header('Authorization')
     let access
     if (token)
-      jwt.verify(token, secret, (error, decoded) => {
+      jwt.verify(token, SECRET, (error, decoded) => {
         if (error) {
           res.send(401, { message: 'Error: invalid token' })
         } else if (decoded) {
-          access = Authentication.generateGraphqlOptions()
+          access = OPTIONS
         }
       })
     else
@@ -34,15 +37,10 @@ export default class Authentication {
     return access
   }
 
-  static generateGraphqlOptions() {
-    const schema = makeExecutableSchema({typeDefs, resolvers})
-    return ({ schema, context })
-  }
-
   static checkEncryption(password, user, res) {
     bcrypt.compare(password, user.password).then(success => {
       if (success) {
-        const token = jwt.sign({ user_id: user._id }, secret, { expiresIn: '3h' })
+        const token = jwt.sign({ user_id: user._id }, SECRET, { expiresIn: '3h' })
         res.send(200,
           {
             _id: user._id,
